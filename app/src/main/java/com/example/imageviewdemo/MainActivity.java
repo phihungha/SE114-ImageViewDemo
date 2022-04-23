@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             else
                 Toast.makeText(this, "Failed to save bitmap into file!", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(this, "Failed to save bitmap into file!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -91,16 +91,16 @@ public class MainActivity extends AppCompatActivity {
             long name = System.currentTimeMillis();
             values.put(MediaStore.Images.Media.DISPLAY_NAME, name + ".png");
             Uri imageCollection = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-            Uri newImage = getContentResolver().insert(imageCollection, values);
+            Uri newImageUri = getContentResolver().insert(imageCollection, values);
 
-            if (newImage != null) {
-                try (final OutputStream stream = getContentResolver().openOutputStream(newImage)) {
+            if (newImageUri != null) {
+                try (final OutputStream stream = getContentResolver().openOutputStream(newImageUri)) {
                     if (currentBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream))
                         Toast.makeText(this, "Saved bitmap into gallery!", Toast.LENGTH_SHORT).show();
                     else
                         Toast.makeText(this, "Failed to save bitmap into gallery!", Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Toast.makeText(this, "Failed to save bitmap into gallery!", Toast.LENGTH_SHORT).show();
                 }
             }
         }
